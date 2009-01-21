@@ -2,7 +2,6 @@ require 'optparse'
 require 'yaml'
 require 'rubygems'
 
-# TODO extract into BashCompletion.install ...
 # TODO support non-Bash shells
 module InstallTabTab
   class CLI
@@ -18,13 +17,11 @@ module InstallTabTab
     def execute(stdout, arguments=[])
       $stdout = stdout
       parse_options(arguments)
-      @to_file = []
+      @formatter = TabTab::Formatter::Bash.new
       install_externals
       install_for_files
       install_from_gems
-      @file = File.open(File.join(home, ".tabtab.bash"), "w")
-      @to_file.each { |line| @file << "#{line}\n" }
-      @file.close
+      @formatter.write
     end
    
     def parse_options(arguments)
@@ -108,11 +105,11 @@ module InstallTabTab
 
     def install_cmd_and_aliases(app_name, arg_str)
       tabtab = tabtab_cmd(arg_str)
-      @to_file << "complete -o default -C '#{tabtab}' #{app_name}"
+      @formatter.install_cmd(tabtab, app_name)
       aliases.each do |alias_cmd, cmd|
         if cmd == app_name
           tabtab = tabtab_cmd(arg_str, cmd)
-          @to_file << "complete -o default -C '#{tabtab}' #{alias_cmd}"
+          @formatter.install_alias(tabtab, app_name, alias_cmd)
         end
       end if aliases
     end

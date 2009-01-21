@@ -8,3 +8,4 @@ end
 require 'tabtab/local_config'
 require 'tabtab/completions'
 require 'tabtab/definitions'
+require 'tabtab/formatters'
