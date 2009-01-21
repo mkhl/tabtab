@@ -36,6 +36,10 @@ lib/tabtab/definitions/command.rb
 lib/tabtab/definitions/default.rb
 lib/tabtab/definitions/flag.rb
 lib/tabtab/definitions/root.rb
+lib/tabtab/formatters.rb
+lib/tabtab/formatters/base.rb
+lib/tabtab/formatters/bash.rb
+lib/tabtab/formatters/zsh.rb
 lib/tabtab/framework_testing.rb
 lib/tabtab/local_config.rb
 lib/tabtab/test/assertions.rb
